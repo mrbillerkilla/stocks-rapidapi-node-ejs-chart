@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register</title>
+  <link rel="stylesheet" href="/regri.css">
+  <link rel="shortcut icon"
+    href="https://th.bing.com/th/id/OIP.wzFtXPcau-zqgeWbjOucVQHaDz?w=344&h=179&c=7&r=0&o=5&dpr=1.4&pid=1.7"
+    type="image/x-icon">
+</head>
+
+<body>
+  <div class="site">
+    <div class="background">
+      <img src="https://www.mayfairgallery.com/media/catalog/product/1/5/15908-a-summer-repast-large-roman-classical-painting-by-boulanger-3-2000x.jpg" alt="" class="background-picture">
+      <div class="foreground">
+        <div class="card">
+          <h4 class="title">Join usss!!</h4>
+          <!-- Voeg de 'action' en 'method' attributen toe aan je formulier -->
+          <form action="/register" method="post" onsubmit="return validateForm()">
+            <div class="warning"></div>
+            <div class="field">
+              <svg class="input-icon" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
+                <path></path>
+              </svg>
+              <input autocomplete="off" id="name" placeholder="Name" class="input-field" name="name" type="text"
+                required>
+            </div>
+            <div class="field">
+              <svg class="input-icon" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
+                <path></path>
+              </svg>
+              <input autocomplete="off" id="logemail" placeholder="Email" class="input-field" name="email" type="email"
+                required>
+            </div>
+            <div class="field">
+              <svg class="input-icon" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
+                <path></path>
+              </svg>
+              <input autocomplete="off" id="logpass" placeholder="Password" class="input-field" name="password"
+                type="password" required>
+            </div>
+            <div class="field">
+              <svg class="input-icon" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
+                <path></path>
+              </svg>
+              <input autocomplete="off" id="confirmpass" placeholder="Confirm Password" class="input-field"
+                name="confirmPassword" type="password" required>
+            </div>
+            <button class="btn" type="submit" href="/index">Join us</button>
+            <a href="https://meme-generator.com/wp-content/uploads/mememe/2019/04/mememe_d13c58d5827d65a8924d0463fe467aa4-1.jpg" class="btn-link">Forgot your password?</a>
+            <a href="#" class="btn-link1">Don't have an account?</a>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function validateForm() {
+      let password = document.getElementById("logpass").value;
+      let confirmPassword = document.getElementById("confirmpass").value;
+
+      if (password === confirmPassword) {
+        window.location.href = "index.html";
+        return true;
+        console.log("🗿🗿🗿🗿🗿");
+      }
+      document.querySelector(".warning").innerHTML = `Vul het juiste wachtwoord in.`;
+      console.log("🏎️🏎️🏎️🏎️🏎️🏎️");
+
+      return false;
+    }
+  </script>
+</body>
+
+</html>

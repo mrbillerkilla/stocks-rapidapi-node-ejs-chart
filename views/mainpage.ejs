@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>mainpage</title>
+    <link rel="stylesheet" href="/mainpage.css">
+    <link rel="shortcut icon" href="https://www.slimleren.nl/files/800_800/201484.png" type="image/x-icon">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+    <div class="site">
+        <div class="background">
+            <img src="https://www.mayfairgallery.com/media/catalog/product/1/5/15908-a-summer-repast-large-roman-classical-painting-by-boulanger-3-2000x.jpg"
+                alt="" class="background-picture">
+            <div class="foreground">
+                <div class="geldlenen"><img src="https://www.zietze.nl/blog/geld-lenen-kost-geld-logo/x.gif" alt="foto">
+                </div>
+                In je mainpage.ejs
+                <h1>Welcome to the Main Page, <%- user.name -%>!</h1>
+
+                <h2>Currency Exchange Rates</h2>
+                <canvas id="exchangeRateChart" width="40vw" height="40vh"
+                    style="background-color: rgba(255, 255, 255, 0.8);"></canvas>
+                <script type="module">
+                    document.addEventListener("DOMContentLoaded", async function () {
+                        try {
+                            var ctx = document.getElementById('exchangeRateChart').getContext('2d');
+                            var chart;
+
+                            async function updateChart() {
+                                try {
+                                    // Gebruik de gegevens die zijn opgehaald in /mainpage
+                                    var exchangeRates = JSON.parse(`<%- exchangeRates -%>`);
+
+                                    var labels = exchangeRates.map(rate => rate['LastRefreshed']);
+                                    var data = exchangeRates.map(rate => parseFloat(rate['ExchangeRate']));
+
+                                    chart.data.labels = labels;
+                                    chart.data.datasets[0].data = data;
+                                    chart.update();
+                                } catch (error) {
+                                    console.error('Fout bij het bijwerken van de grafiek:', error);
+                                }
+                            }
+
+
+                            setTimeout(async function () {
+                                await updateChart();
+                                setInterval(async function () {
+                                    await updateChart();
+                                }, 180000);
+                            }, 3000);
+
+                            chart = new Chart(ctx, {
+                                type: 'line',
+                                data: {
+                                    labels: [],
+                                    datasets: [{
+                                        label: 'Exchange Rate',
+                                        data: [],
+                                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                                        borderColor: 'rgba(75, 192, 192, 1)',
+                                        borderWidth: 1
+                                    }]
+                                },
+                                options: {
+                                    scales: {
+                                        xAxes: [{
+                                            type: 'time',
+                                            time: {
+                                                unit: 'day',
+                                                displayFormats: {
+                                                    day: 'MMM D'
+                                                }
+                                            }
+                                        }],
+                                        yAxes: [{
+                                            scaleLabel: {
+                                                display: true,
+                                                labelString: 'Exchange Rate',
+                                                fontColor: 'black'
+                                            },
+                                            ticks: {
+                                                beginAtZero: true,
+                                                fontColor: 'black'
+                                            }
+                                        }]
+                                    }
+                                }
+                            });
+
+                            window.addEventListener('beforeunload', async function (event) {
+                                await updateChart();
+                            });
+                        } catch (err) {
+                            console.error(err);
+                        }
+                    });
+                </script>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
